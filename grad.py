@@ -21,13 +21,11 @@ def generate_dataset(n):
 
 def gd(x, y, theta, alpha):
     m = X.shape[0]
-    print(m)
-    grad = np.dot(X, theta) - y
-    print(X)
-    print(theta)
-    print(grad)
-    return theta - alpha * (1/m) * np.sum(grad)
-
+    MSE = np.dot(X, theta) - y
+    grad = np.transpose((np.dot(X, theta) - y)) * X
+    sum = np.sum(grad, axis = 0)
+    update = theta - alpha * (1/m) * sum
+    return update, MSE
 
 
 
@@ -38,7 +36,12 @@ if __name__ == "__main__":
     plt.scatter(X[:, 1], y)
     plt.savefig('figure.png')
 
-    theta = np.array([1., 2])
+    #First epoch
+    theta = np.array([1., 2]) ## Starting point
     learning_rate = 0.01
-    update = gd(X, y, theta, learning_rate)
-    print(update)
+    update, MSE = gd(X, y, theta, learning_rate)
+
+    #Test 10 epochs
+    for i in range(1000):
+        update, MSE = gd(X, y, update, learning_rate)
+        print("Iteration: {}  Theta: {}".format(i, update))
