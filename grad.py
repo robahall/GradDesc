@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     #First epoch
     theta = np.array([1., 2]) ## Starting point
-    learning_rate = 0.01
+    learning_rate = 1
     update, MSE = gd(X, y, theta, learning_rate)
 
     #Test I epochs
@@ -51,6 +51,8 @@ if __name__ == "__main__":
 
 
     plt.scatter(theta[:, 0], theta[:, 1])
-    plt.savefig('gd.png')
+    plt.ylim(0,10)
+    plt.xlim(0, 10)
+    plt.savefig('gd1.png')
 
-
+##TODO: Plot different learning rates on same figure
