@@ -3,6 +3,8 @@ import random as rand
 
 import matplotlib.pyplot as plt
 plt.interactive(False)
+from matplotlib import animation, rc
+rc('animation', html='jshtml')
 
 ## Create dataset
 
@@ -33,15 +35,22 @@ def gd(x, y, theta, alpha):
 if __name__ == "__main__":
     X, y = generate_dataset(100)
 
-    plt.scatter(X[:, 1], y)
-    plt.savefig('figure.png')
+    #plt.scatter(X[:, 1], y)
+    #plt.savefig('data.png')
 
     #First epoch
     theta = np.array([1., 2]) ## Starting point
     learning_rate = 0.01
     update, MSE = gd(X, y, theta, learning_rate)
 
-    #Test 10 epochs
-    for i in range(1000):
+    #Test I epochs
+    for i in range(9000):
         update, MSE = gd(X, y, update, learning_rate)
+        theta = np.vstack((theta, update))
         print("Iteration: {}  Theta: {}".format(i, update))
+
+
+    plt.scatter(theta[:, 0], theta[:, 1])
+    plt.savefig('gd.png')
+
+
