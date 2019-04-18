@@ -4,6 +4,8 @@ Various Gradient Descent algorithms
 Current goal is create random data sets and investigate 
 how the different gradient descent algorithms speed up the process.
 
+First notebook wrapping my head around plotting the error and the learning path is located in notebooks. 
+
 First Batch:
 
 *   Batch Gradient Descent - update after one epoch (run through all the data once and then update coefficents)
