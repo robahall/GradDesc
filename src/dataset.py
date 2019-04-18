@@ -21,8 +21,6 @@ class Data:
     def inspect_Y(self):
         return self.Y
 
-class Regression(Data):
-
 
 
 
