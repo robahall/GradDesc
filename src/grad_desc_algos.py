@@ -24,6 +24,7 @@ def gd(X, y, theta, learning_rate):
     return update, MSE
 
 def batch_gradient_descent(X, y, weights, learning_rate, epochs):
+
     """Perform batch gradient descent.
     Batch gradient descent iterates through all sample before updating.
 
@@ -49,7 +50,18 @@ def batch_gradient_descent(X, y, weights, learning_rate, epochs):
 
 
 def stochastic_gradient_descent(X, y, weights, learning_rate, epochs):
-    """Performs stochastic gradient descent (SGD)"""
+
+    """Performs stochastic gradient descent (SGD)
+    Stochastic gradient descent randomly shuffles the linear equations of data set and then performs gradient descent
+    updating after each linear equation.
+
+    Notes:
+    cumulative weights => returns a numpy array that includes weights at each iteration
+
+    results => returns iteration and mean squared error for each epoch.
+
+    update => taking initial inputted theta and subtracting a scaling of the average sum of squares.
+        """
 
     cumulative_weights = weights  # initialize weights
     results = np.array([[0,0]])   # starting point
