@@ -37,7 +37,8 @@ def batch_gradient_descent(X, y, weights, learning_rate, epochs):
     """
 
     cumulative_weights = weights  # initialize weights
-    results = np.array([0,0])  # starting point
+    results = np.array([0,0])     # starting point
+
     for i in range(epochs):
         weights, MSE = gd(X, y, weights, learning_rate)
         cumulative_weights = np.vstack([cumulative_weights, weights])   # provide a numpy stack for the weights at each
@@ -45,6 +46,31 @@ def batch_gradient_descent(X, y, weights, learning_rate, epochs):
         results = np.vstack([results, np.array([i+1, MSE])])
 
     return cumulative_weights, results
+
+
+def stochastic_gradient_descent(X, y, weights, learning_rate, epochs):
+    """Performs stochastic gradient descent (SGD)"""
+
+    cumulative_weights = weights  # initialize weights
+    results = np.array([[0,0]])   # starting point
+
+    for i in range(epochs):
+        y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
+                                            # Need to generalize here.
+        Xy = np.concatenate((X,y), axis = 1)  # combine X and y to ensure each linear equation stays the same
+        np.random.shuffle(Xy)
+
+        X = Xy[:, :X.shape[1]] # Split X  back out
+        y = Xy[:, -1]  # Split y back out
+
+        for xi, yi in zip(X,y):
+            weights, MSE = gd(xi, yi, weights, learning_rate)
+            cumulative_weights = np.vstack([cumulative_weights, weights])
+            results = np.vstack([results, np.array([i+1, MSE])])  # Will return multiple values for each iteration
+
+        return cumulative_weights, results
+
+
 
 
 
