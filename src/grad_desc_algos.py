@@ -23,4 +23,29 @@ def gd(X, y, theta, learning_rate):
     MSE = np.average(error ** 2)
     return update, MSE
 
+def batch_gradient_descent(X, y, weights, learning_rate, epochs):
+    """Perform batch gradient descent.
+    Batch gradient descent iterates through all sample before updating.
+
+    Notes:
+    cumulative weights => returns a numpy array that includes weights at each iteration
+
+    results => returns iteration and mean squared error for each epoch.
+
+    update => taking initial inputted theta and subtracting a scaling of the average sum of squares.
+
+    """
+
+    cumulative_weights = weights  # initialize weights
+    results = np.array([0,0])  # starting point
+    for i in range(epochs):
+        weights, MSE = gd(X, y, weights, learning_rate)
+        cumulative_weights = np.vstack([cumulative_weights, weights])   # provide a numpy stack for the weights at each
+                                                                        # iteration
+        results = np.vstack([results, np.array([i+1, MSE])])
+
+    return cumulative_weights, results
+
+
+
 
