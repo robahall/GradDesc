@@ -83,6 +83,59 @@ def stochastic_gradient_descent(X, y, weights, learning_rate, epochs):
         return cumulative_weights, results
 
 
+def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size):
+    """
+    Performs minibatch gradient descent (mGD)
+
+    mGD randomly shuffles the linear equations of data set and then performs gradient descent
+    updating after each mini batch of selected linear equation.
+
+    Notes:
+    cumulative weights => returns a numpy array that includes weights at each iteration
+
+    results => returns iteration and mean squared error for each epoch.
+
+    update => taking initial inputted theta and subtracting a scaling of the average sum of squares.
+
+    batch_size => when batch size = 1, mGD is stochastic gradient descent
+                  when batch size = sample size, mGD is batch gradient descent
+
+    This algorithm could be solution for previous written equations.
+    """
+
+    cumulative_weights = weights  # initialize weights
+    results = np.array([[0, 0]])  # starting point
+
+    for i in range(epochs):
+        y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
+        # Need to generalize here.
+        Xy = np.concatenate((X, y), axis=1)  # combine X and y to ensure each linear equation stays the same
+        np.random.shuffle(Xy)
+
+        m = Xy.shape[0]
+
+        if m % batch_size != 0:
+            for i in range(m // batch_size):
+                X = Xy[batch_size * (i):batch_size * (i + 1), :X.shape[1]]  # Split X  back out
+                y = Xy[batch_size * (i):batch_size * (i + 1):, -1]  # Split y back out
+                weights, MSE = gda.gd(X, y, weights, learning_rate)
+                cumulative_weights = np.vstack([cumulative_weights, weights])
+                results = np.vstack([results, np.array([i + 1, MSE])])  # Will return multiple values for each iteration
+            X = Xy[batch_size * (m // batch_size):, :X.shape[1]]  # Split X  back out
+            y = Xy[batch_size * (m // batch_size):, -1]
+            weights, MSE = gda.gd(X, y, weights, learning_rate)
+            cumulative_weights = np.vstack([cumulative_weights, weights])
+            results = np.vstack([results, np.array([i + 1, MSE])])
+            return cumulative_weights, results
+
+        else:
+            for i in range(m // batch_size):
+                X = Xy[batch_size * (i):batch_size * (i + 1), :X.shape[1]]  # Split X  back out
+                y = Xy[batch_size * (i):batch_size * (i + 1):, -1]  # Split y back out
+                weights, MSE = gda.gd(X, y, weights, learning_rate)
+                cumulative_weights = np.vstack([cumulative_weights, weights])
+                results = np.vstack([results, np.array([i + 1, MSE])])
+            return cumulative_weights, results
 
 
 
