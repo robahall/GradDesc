@@ -118,12 +118,12 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
             for i in range(m // batch_size):
                 X = Xy[batch_size * (i):batch_size * (i + 1), :X.shape[1]]  # Split X  back out
                 y = Xy[batch_size * (i):batch_size * (i + 1):, -1]  # Split y back out
-                weights, MSE = gda.gd(X, y, weights, learning_rate)
+                weights, MSE = gd(X, y, weights, learning_rate)
                 cumulative_weights = np.vstack([cumulative_weights, weights])
                 results = np.vstack([results, np.array([i + 1, MSE])])  # Will return multiple values for each iteration
             X = Xy[batch_size * (m // batch_size):, :X.shape[1]]  # Split X  back out
             y = Xy[batch_size * (m // batch_size):, -1]
-            weights, MSE = gda.gd(X, y, weights, learning_rate)
+            weights, MSE = gd(X, y, weights, learning_rate)
             cumulative_weights = np.vstack([cumulative_weights, weights])
             results = np.vstack([results, np.array([i + 1, MSE])])
             return cumulative_weights, results
@@ -132,7 +132,7 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
             for i in range(m // batch_size):
                 X = Xy[batch_size * (i):batch_size * (i + 1), :X.shape[1]]  # Split X  back out
                 y = Xy[batch_size * (i):batch_size * (i + 1):, -1]  # Split y back out
-                weights, MSE = gda.gd(X, y, weights, learning_rate)
+                weights, MSE = gd(X, y, weights, learning_rate)
                 cumulative_weights = np.vstack([cumulative_weights, weights])
                 results = np.vstack([results, np.array([i + 1, MSE])])
             return cumulative_weights, results
