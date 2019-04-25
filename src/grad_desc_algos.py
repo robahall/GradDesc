@@ -139,6 +139,6 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
 
     return cumulative_weights, results
 
-
+#TODO: Unit test algorithms, make sure that algorithms are generalized to different numpy inputs
 
 
