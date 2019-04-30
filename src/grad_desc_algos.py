@@ -14,6 +14,8 @@ def gd(X, y, theta, learning_rate):
     update => taking initial inputted theta and subtracting a scaling of the average sum of squares.
 
     MSE => provide the mean squared error of the current prediction error.
+
+    Won't work for collaborative filtering systems.
     """
 
     m = X.shape[0]
