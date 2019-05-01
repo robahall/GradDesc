@@ -120,6 +120,7 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
         m = Xy.shape[0]
 
         if m % batch_size != 0:
+            # For batch size where you have a remainder at the end of the fitting. Modulo != 0
             for i in range(m // batch_size):
                 X = Xy[batch_size * (i):batch_size * (i + 1), :X.shape[1]]  # Split X  back out
                 y = Xy[batch_size * (i):batch_size * (i + 1):, -1]  # Split y back out
@@ -133,6 +134,7 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
             results = np.vstack([results, np.array([j + 1, MSE])])
 
         else:
+            # For batch size where you do not have a remainder at the end of the fitting. Modulo = 0.
             for i in range(m // batch_size):
                 X = Xy[batch_size * (i):batch_size * (i + 1), :X.shape[1]]  # Split X  back out
                 y = Xy[batch_size * (i):batch_size * (i + 1):, -1]  # Split y back out
