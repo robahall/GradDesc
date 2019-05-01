@@ -1,6 +1,7 @@
 import numpy as np
 
 #TODO: Unit test algorithms, make sure that algorithms are generalized to different numpy array sizes
+# Figure out how to set variables for momentum
 
 
 def gd(X, y, theta, learning_rate, mom = False):
@@ -19,6 +20,7 @@ def gd(X, y, theta, learning_rate, mom = False):
 
     Won't work for collaborative filtering systems.
     """
+
     global momentum
 
     if mom:
@@ -28,6 +30,7 @@ def gd(X, y, theta, learning_rate, mom = False):
         update = theta * momentum - learning_rate * (1 / m) * grad
         MSE = np.average(error ** 2)
         return update, MSE
+
     else:
         m = X.shape[0]
         error = np.dot(X, theta) - y
