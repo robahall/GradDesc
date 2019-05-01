@@ -1,5 +1,7 @@
 import numpy as np
 
+#TODO: Unit test algorithms, make sure that algorithms are generalized to different numpy array sizes
+
 
 def gd(X, y, theta, learning_rate):
 
@@ -141,6 +143,9 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
 
     return cumulative_weights, results
 
-#TODO: Unit test algorithms, make sure that algorithms are generalized to different numpy inputs
+
+
+def momentum_sgd():
+    pass
 
 
