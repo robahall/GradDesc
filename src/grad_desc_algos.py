@@ -3,6 +3,8 @@ import numpy as np
 #TODO: Unit test algorithms, make sure that algorithms are generalized to different numpy array sizes
 # Figure out how to set variables for momentum
 
+momentum = 0.9
+
 
 def gd(X, y, theta, learning_rate, mom = False):
 
@@ -27,7 +29,7 @@ def gd(X, y, theta, learning_rate, mom = False):
         m = X.shape[0]
         error = np.dot(X, theta) - y
         grad = np.dot(X.transpose(), error)
-        update = theta * momentum - learning_rate * (1 / m) * grad
+        update = theta * momentum - (1- momentum) * learning_rate * (1 / m) * grad
         MSE = np.average(error ** 2)
         return update, MSE
 
@@ -161,7 +163,7 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
 
 
 
-def momentum_gd(X, y, weights, learning_rate, epochs, momentum = 0.9):
+def momentum_gd(X, y, weights, learning_rate, epochs, momentum):
 
     """Performs stochastic gradient descent (SGD)
     Stochastic gradient descent randomly shuffles the linear equations of data set and then performs gradient descent
@@ -177,7 +179,7 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum = 0.9):
 
     cumulative_weights = weights  # initialize weights
     results = np.array([[0,0]])   # starting point
-
+    momentum = momentum
 
     for i in range(epochs):
         y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
