@@ -3,10 +3,10 @@ import numpy as np
 #TODO: Unit test algorithms, make sure that algorithms are generalized to different numpy array sizes
 # Figure out how to set variables for momentum
 
-momentum = 0.9
+momentum = 1
 
 
-def gd(X, y, theta, learning_rate, mom = False):
+def gd(X, y, theta, learning_rate, velocity_vector, momentum=0):
 
     """The standard gradient descent algorithm.
     Notes:
@@ -23,15 +23,14 @@ def gd(X, y, theta, learning_rate, mom = False):
     Won't work for collaborative filtering systems.
     """
 
-    global momentum
-
-    if mom:
+    if momentum < 1 or momentum > 0:
         m = X.shape[0]
         error = np.dot(X, theta) - y
-        grad = np.dot(X.transpose(), error)
-        update = theta * momentum - (1- momentum) * learning_rate * (1 / m) * grad
+        grad = learning_rate * (1 / m) * np.dot(X.transpose(), error) # Transpose to align all the weights and the errors generate
+        velocity_vector = momentum * velocity_vector - grad
+        update = theta + velocity_vector
         MSE = np.average(error ** 2)
-        return update, MSE
+        return update, MSE, velocity_vector
 
     else:
         m = X.shape[0]
@@ -83,7 +82,8 @@ def stochastic_gradient_descent(X, y, weights, learning_rate, epochs):
     update => taking initial inputted theta and subtracting a scaling of the average sum of squares.
         """
 
-    cumulative_weights = weights  # initialize weights
+    cumulative_weights = weights # initialize weights
+
     results = np.array([[0,0]])   # starting point
 
     for i in range(epochs):
@@ -178,8 +178,8 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum):
         """
 
     cumulative_weights = weights  # initialize weights
+    velocity_vector = np.ones(X.shape(1)) # Need to update
     results = np.array([[0,0]])   # starting point
-    momentum = momentum
 
     for i in range(epochs):
         y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
@@ -191,10 +191,8 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum):
         y = Xy[:, -1]  # Split y back out
 
         for xi, yi in zip(X,y):
-            weights, MSE = gd(xi, yi, weights, learning_rate, mom = True)
+            weights, MSE = gd(xi, yi, weights, learning_rate, momentum) ## Need to update
             cumulative_weights = np.vstack([cumulative_weights, weights])
             results = np.vstack([results, np.array([i+1, MSE])])  # Will return multiple values for each iteration
 
         return cumulative_weights, results
-
-
