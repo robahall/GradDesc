@@ -13,14 +13,14 @@ if __name__ == "__main__":
                                              coef=True,
                                              random_state=1)
 
-
-    rs = np.array([120, 40.])
+    theta = np.array([120, 40.])
     lr = 0.01
-    epochs = 100
-    batch_size = 1
+    epochs = 10
+    momentum = 0.9
 
-    thetas, MSE = gda.minibatch_gradient_descent(features, target, rs, lr, epochs, batch_size)
+    thetas, MSE = gda.momentum_gd(features, target, theta, lr, epochs, momentum)
 
     print(thetas[-1,:])
     print(coef)
     print(MSE[-1,:])
+
