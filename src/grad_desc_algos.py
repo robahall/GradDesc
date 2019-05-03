@@ -1,7 +1,9 @@
 import numpy as np
 
-#TODO: Unit test algorithms, make sure that algorithms are generalized to different numpy array sizes
-# Figure out how to set variables for momentum
+#TODO: Unit test algorithms;
+#TODO: Make sure that algorithms are generalized to different numpy array sizes
+#TODO: Momentum does not work for m = 1.0. m = 1.0 should be normal SGD.
+#TODO: Have early stopping when MSE is below a certain value.
 
 momentum = 1
 
