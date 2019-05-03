@@ -6,7 +6,7 @@ import numpy as np
 momentum = 1
 
 
-def gd(X, y, theta, learning_rate, velocity_vector, momentum=0):
+def gd(X, y, theta, learning_rate, velocity_vector = 0, momentum=0):
 
     """The standard gradient descent algorithm.
     Notes:
@@ -178,7 +178,7 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum):
         """
 
     cumulative_weights = weights  # initialize weights
-    velocity_vector = np.ones(X.shape(1)) # Need to update
+    velocity_vector = np.ones(X.shape[1]) # Need to update
     results = np.array([[0,0]])   # starting point
 
     for i in range(epochs):
@@ -191,7 +191,7 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum):
         y = Xy[:, -1]  # Split y back out
 
         for xi, yi in zip(X,y):
-            weights, MSE = gd(xi, yi, weights, learning_rate, momentum) ## Need to update
+            weights, MSE, velocity_vector = gd(xi, yi, weights, learning_rate, velocity_vector, momentum) ## Need to update
             cumulative_weights = np.vstack([cumulative_weights, weights])
             results = np.vstack([results, np.array([i+1, MSE])])  # Will return multiple values for each iteration
 
