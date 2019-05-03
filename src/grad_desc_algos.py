@@ -184,7 +184,7 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum):
     results = np.array([[0,0]])   # starting point
     count = 0
 
-    while count < epochs or MSE > 1:
+    while count < epochs or MSE > 0.01:
         y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
                                             # Need to generalize here.
         Xy = np.concatenate((X,y), axis = 1)  # combine X and y to ensure each linear equation stays the same
@@ -199,4 +199,4 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum):
             results = np.vstack([results, np.array([count+1, MSE])])# Will return multiple values for each iteration
         count += 1
 
-        return cumulative_weights, results, count
+    return cumulative_weights, results, count
