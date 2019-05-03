@@ -3,7 +3,7 @@ import numpy as np
 #TODO: Unit test algorithms;
 #TODO: Make sure that algorithms are generalized to different numpy array sizes
 #TODO: Momentum does not work for m = 1.0. m = 1.0 should be normal SGD.
-#TODO: Have early stopping when MSE is below a certain value.
+#TODO: Have early stopping when MSE is below a certain value.Something is currently getting hung up on loop.
 
 momentum = 1
 
@@ -184,7 +184,7 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum):
     results = np.array([[0,0]])   # starting point
     count = 0
 
-    while count < epochs or MSE > 0.01:
+    while count < epochs or MSE > 1:
         y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
                                             # Need to generalize here.
         Xy = np.concatenate((X,y), axis = 1)  # combine X and y to ensure each linear equation stays the same
