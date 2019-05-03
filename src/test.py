@@ -24,3 +24,5 @@ if __name__ == "__main__":
     print(coef)
     print(MSE[-1,:])
 
+
+## See how my code stacks up to this: https://gluon.mxnet.io/chapter06_optimization/momentum-scratch.html
