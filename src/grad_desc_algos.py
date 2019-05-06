@@ -160,8 +160,10 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
                 cumulative_weights = np.vstack([cumulative_weights, weights])
                 results = np.vstack([results, np.array([j + 1, MSE])])
 
+        count = j+1
 
-    return cumulative_weights, results
+
+    return cumulative_weights, results, count
 
 
 
@@ -185,8 +187,8 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
     count = 0
 
     if momentum == 0:
-        cumulative_weights, results = minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
-        return cumulative_weights, results
+        cumulative_weights, results, count = minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
+        return cumulative_weights, results, count
 
     while count < epochs or MSE > 1:
         y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
@@ -197,7 +199,7 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
         X = Xy[:, :X.shape[1]] # Split X  back out
         y = Xy[:, -1]  # Split y back out
 
-        for c, xi, yi in enumerate(zip(X,y)):
+        for c, (xi, yi) in enumerate(zip(X,y)):
             weights, MSE, velocity_vector = gd(xi, yi, weights, learning_rate, velocity_vector, momentum) ## Need to update
             cumulative_weights = np.vstack([cumulative_weights, weights])
             results = np.vstack([results, np.array([c, MSE])])# Will return multiple values for each iteration
