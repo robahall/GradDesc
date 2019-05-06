@@ -15,10 +15,10 @@ if __name__ == "__main__":
 
     theta = np.array([120, 40.])
     lr = 0.01
-    epochs = 10
-    momentum = 0.9
+    epochs = 1
+    momentum = 0
 
-    thetas, MSE = gda.momentum_gd(features, target, theta, lr, epochs, momentum)
+    thetas, MSE, count = gda.momentum_gd(features, target, theta, lr, epochs, momentum, batch_size = 1)
 
     print(thetas[-1,:])
     print(coef)
