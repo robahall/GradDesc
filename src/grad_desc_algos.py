@@ -25,7 +25,7 @@ def gd(X, y, theta, learning_rate, velocity_vector = 0, momentum=0):
     Won't work for collaborative filtering systems.
     """
 
-    if momentum < 1 or momentum > 0:
+    if momentum < 1 and momentum > 0:
         m = X.shape[0]
         error = np.dot(X, theta) - y
         grad = learning_rate * (1 / m) * np.dot(X.transpose(), error) # Transpose to align all the weights and the errors generate
