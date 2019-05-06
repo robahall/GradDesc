@@ -29,7 +29,7 @@ def gd(X, y, theta, learning_rate, velocity_vector = 0, momentum=0):
         m = X.shape[0]
         error = np.dot(X, theta) - y
         grad = learning_rate * (1 / m) * np.dot(X.transpose(), error) # Transpose to align all the weights and the errors generate
-        velocity_vector = momentum * velocity_vector - grad
+        velocity_vector = (momentum * velocity_vector) - grad
         update = theta + velocity_vector
         MSE = np.average(error ** 2)
         return update, MSE, velocity_vector
@@ -165,7 +165,7 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
 
 
 
-def momentum_gd(X, y, weights, learning_rate, epochs, momentum):
+def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
 
     """Performs stochastic gradient descent (SGD)
     Stochastic gradient descent randomly shuffles the linear equations of data set and then performs gradient descent
@@ -183,6 +183,10 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum):
     velocity_vector = np.ones(X.shape[1]) # Need to update
     results = np.array([[0,0]])   # starting point
     count = 0
+
+    if momentum == 0:
+        cumulative_weights, results = minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
+        return cumulative_weights, results
 
     while count < epochs or MSE > 1:
         y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
