@@ -2,13 +2,12 @@ import numpy as np
 
 #TODO: Unit test algorithms;
 #TODO: Make sure that algorithms are generalized to different numpy array sizes
-#TODO: Momentum does not work for m = 1.0. m = 1.0 should be normal SGD.
-#TODO: Have early stopping when MSE is below a certain value.Something is currently getting hung up on loop.
+#TODO: Have early stopping when MSE is below a certain value. Not breaking out of loop.
 
 momentum = 1
 
 
-def gd(X, y, theta, learning_rate, velocity_vector = 0, momentum=0):
+def gd(X, y, theta, learning_rate, velocity_vector = 0, momentum=0): ## Clean up with kwargs
 
     """The standard gradient descent algorithm.
     Notes:
@@ -182,15 +181,16 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
         """
 
     cumulative_weights = weights  # initialize weights
-    velocity_vector = np.ones(X.shape[1]) # Need to update
+    velocity_vector = np.zeros(X.shape[1]) # Need to update
     results = np.array([[0,0]])   # starting point
-    count = 0
+    epoch_count = 1
+    MSE = 1000
 
     if momentum == 0:
         cumulative_weights, results, count = minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
         return cumulative_weights, results, count
 
-    while count < epochs or MSE > 1:
+    while epoch_count < epochs or MSE > 10:
         y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
                                             # Need to generalize here.
         Xy = np.concatenate((X,y), axis = 1)  # combine X and y to ensure each linear equation stays the same
@@ -203,6 +203,6 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
             weights, MSE, velocity_vector = gd(xi, yi, weights, learning_rate, velocity_vector, momentum) ## Need to update
             cumulative_weights = np.vstack([cumulative_weights, weights])
             results = np.vstack([results, np.array([c, MSE])])# Will return multiple values for each iteration
-        count = c
+        epoch_count +=1
 
-    return cumulative_weights, results, count
+    return cumulative_weights, results, epoch_count
