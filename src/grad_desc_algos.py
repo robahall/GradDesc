@@ -197,10 +197,10 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
         X = Xy[:, :X.shape[1]] # Split X  back out
         y = Xy[:, -1]  # Split y back out
 
-        for xi, yi in zip(X,y):
+        for c, xi, yi in enumerate(zip(X,y)):
             weights, MSE, velocity_vector = gd(xi, yi, weights, learning_rate, velocity_vector, momentum) ## Need to update
             cumulative_weights = np.vstack([cumulative_weights, weights])
-            results = np.vstack([results, np.array([count+1, MSE])])# Will return multiple values for each iteration
-        count += 1
+            results = np.vstack([results, np.array([c, MSE])])# Will return multiple values for each iteration
+        count = c
 
     return cumulative_weights, results, count
