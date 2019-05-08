@@ -129,6 +129,7 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
 
     cumulative_weights = weights  # initialize weights
     results = np.array([[0, 0]])  # starting point
+    count = 0
 
     for j in range(epochs):
         y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
@@ -151,6 +152,8 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
             weights, MSE = gd(X, y, weights, learning_rate)
             cumulative_weights = np.vstack([cumulative_weights, weights])
             results = np.vstack([results, np.array([j + 1, MSE])])
+            if MSE < 0.1:
+                return cumulative_weights, results, count
 
         else:
             # For batch size where you do not have a remainder at the end of the fitting. Modulo = 0.
@@ -160,6 +163,8 @@ def minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
                 weights, MSE = gd(X, y, weights, learning_rate)
                 cumulative_weights = np.vstack([cumulative_weights, weights])
                 results = np.vstack([results, np.array([j + 1, MSE])])
+            if MSE < 0.1:
+                    return cumulative_weights, results, count
 
         count = j+1
 
@@ -205,9 +210,10 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
             weights, MSE, velocity_vector = gd(xi, yi, weights, learning_rate, velocity_vector, momentum) ## Need to update
             cumulative_weights = np.vstack([cumulative_weights, weights])
             results = np.vstack([results, np.array([c, MSE])])# Will return multiple values for each iteration
+            if MSE < 0.1:
+                return cumulative_weights, results, epoch_count
         epoch_count +=1
 
-        if MSE < 1:
-            break
+
 
     return cumulative_weights, results, epoch_count
