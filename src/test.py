@@ -16,7 +16,7 @@ if __name__ == "__main__":
     theta = np.array([120, 40.])
     lr = 0.01
     epochs = 100
-    momentum = 0
+    momentum = 0.90
 
 
 
