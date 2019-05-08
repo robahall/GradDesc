@@ -17,6 +17,8 @@ def gd(X, y, theta, learning_rate, velocity_vector = 0, momentum=0): ## Clean up
             and multiplying the errors from each of thetas (weights) for each of the linear equations and then summing
             across the respective weights. (Goal is find the average which is in next step)
 
+    velocity_vector => the previous velocity vector multipled by a scalar momentum.
+
     update => taking initial inputted theta and subtracting a scaling of the average sum of squares.
 
     MSE => provide the mean squared error of the current prediction error.
@@ -190,7 +192,7 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
         cumulative_weights, results, count = minibatch_gradient_descent(X, y, weights, learning_rate, epochs, batch_size)
         return cumulative_weights, results, count
 
-    while epoch_count < epochs or MSE > 10:
+    while epoch_count < epochs:
         y = np.reshape(y, (y.shape[0], 1))  # Takes a single dimensional array and converts to multi-dimensional.
                                             # Need to generalize here.
         Xy = np.concatenate((X,y), axis = 1)  # combine X and y to ensure each linear equation stays the same
@@ -204,5 +206,8 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
             cumulative_weights = np.vstack([cumulative_weights, weights])
             results = np.vstack([results, np.array([c, MSE])])# Will return multiple values for each iteration
         epoch_count +=1
+
+        if MSE < 1:
+            break
 
     return cumulative_weights, results, epoch_count
