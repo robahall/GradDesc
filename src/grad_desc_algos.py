@@ -30,8 +30,8 @@ def gd(X, y, theta, learning_rate, velocity_vector = 0, momentum=0): ## Clean up
         m = X.shape[0]
         error = np.dot(X, theta) - y
         grad = learning_rate * (1 / m) * np.dot(X.transpose(), error) # Transpose to align all the weights and the errors generate
-        velocity_vector = (momentum * velocity_vector) + grad
-        update = theta - velocity_vector
+        velocity_vector = (momentum * velocity_vector) - grad
+        update = theta + velocity_vector
         MSE = np.average(error ** 2)
         return update, MSE, velocity_vector
 
