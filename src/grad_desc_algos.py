@@ -2,7 +2,6 @@ import numpy as np
 
 #TODO: Unit test algorithms;
 #TODO: Make sure that algorithms are generalized to different numpy array sizes
-#TODO: Have early stopping when MSE is below a certain value. Not breaking out of loop.
 
 momentum = 1
 
