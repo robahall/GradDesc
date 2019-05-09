@@ -17,7 +17,9 @@ def gd(X, y, theta, learning_rate, velocity_vector = 0, momentum=0): ## Clean up
             and multiplying the errors from each of thetas (weights) for each of the linear equations and then summing
             across the respective weights. (Goal is find the average which is in next step)
 
-    velocity_vector => the previous velocity vector multipled by a scalar momentum.
+    velocity_vector => the previous velocity vector multiplied by a scalar momentum. Interesting that I have seen both
+    methods but have found subtracting the gradient from velocity vector and then adding to weight is more effective
+    than adding gradient to velocity vector then subtracting from weight.
 
     update => taking initial inputted theta and subtracting a scaling of the average sum of squares.
 
