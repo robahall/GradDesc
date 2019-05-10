@@ -22,6 +22,7 @@ if __name__ == "__main__":
 
     thetas, MSE, count = gda.momentum_gd(features, target, theta, lr, epochs, momentum, batch_size=1)
 
+    print(target)
     print("Determined weights: {}".format(thetas[-1,:]))
     print("Acutal Coefficients: {}".format(coef))
     print("End Mean Squared Error: {}".format(MSE[-3:,1]))
