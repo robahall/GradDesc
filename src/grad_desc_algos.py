@@ -3,6 +3,8 @@ import numpy as np
 #TODO: Unit test algorithms;
 #TODO: Make sure that algorithms are generalized to different numpy array sizes
 
+
+
 momentum = 1
 
 
