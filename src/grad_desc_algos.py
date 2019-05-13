@@ -190,6 +190,9 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
     update => taking initial inputted theta and subtracting a scaling of the average sum of squares.
         """
 
+    if y.shape[0] == 1:
+        y = reshape(y)
+
     cumulative_weights = weights  # initialize weights
     velocity_vector = np.zeros(X.shape[1]) # Need to update
     results = np.array([[0,0]])   # starting point
@@ -220,3 +223,7 @@ def momentum_gd(X, y, weights, learning_rate, epochs, momentum, batch_size = 1):
 
 
     return cumulative_weights, results, epoch_count
+
+def reshape(y):
+    """Helper function to return proper shape."""
+    return y.reshape(y.shape[1],)
