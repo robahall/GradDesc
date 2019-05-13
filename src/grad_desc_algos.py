@@ -1,7 +1,9 @@
 import numpy as np
 
 #TODO: Unit test algorithms;
-#TODO: Make sure that algorithms are generalized to different numpy array sizes
+#TODO:      Generalize for different parts of the algos. Method of descent and loss function to use.
+
+"""This module comprises different algorithms for gradient descent. """
 
 
 
