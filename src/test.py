@@ -13,6 +13,8 @@ if __name__ == "__main__":
                                              coef=True,
                                              random_state=1)
 
+    target = np.array([target])
+
     theta = np.array([120, 40.])
     lr = 0.01
     epochs = 1000
